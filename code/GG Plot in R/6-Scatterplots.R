@@ -1,0 +1,70 @@
+
+
+# INSTALL AND LOAD PACKAGES ################################
+if (!require("pacman")) install.packages("pacman")
+
+pacman::p_load(datasets, pacman, rio, tidyverse)
+
+
+# QPLOT ####################################################
+
+# Basic scatterplot
+qplot(Petal.Width, Petal.Length, data = iris) 
+
+# Colored by species
+qplot(Petal.Width,
+  Petal.Length, 
+  color = Species, 
+  data = iris) 
+
+## GGPLOT2 #################################################
+
+# Basic scatterplot
+ggplot(iris, 
+  aes(Petal.Width, Petal.Length)) +
+  geom_point()
+
+# Scatterplot, jittered
+ggplot(iris, 
+  aes(Petal.Width, Petal.Length)) +
+  geom_jitter()
+
+# Scatterplot, jittered, variable size, colored by species
+ggplot(iris, 
+  aes(Petal.Width, Petal.Length,
+    size  = Sepal.Length,
+    color = Species)) +
+  geom_jitter(alpha = .5)
+
+# Scatterplot, colored by species, fit line
+ggplot(iris, 
+  aes(Petal.Width, Petal.Length,
+    color = Species)) +
+  geom_point(size = 3) +
+  geom_smooth(method = lm)
+
+# Scatterplot, colored by species, fit line, density
+ggplot(iris, 
+  aes(Petal.Width, Petal.Length,
+    color = Species)) +
+  geom_point(size = 3) +
+  geom_smooth(method = lm) +
+  geom_density2d(alpha = .5) +
+  theme(legend.position = "bottom")
+
+# CLEAN UP #################################################
+
+# Clear data
+rm(list = ls())  # Removes all objects from environment
+
+# Clear packages
+detach("package:datasets", unload = T)  # For base packages
+p_unload(all)  # Remove all contributed packages
+
+# Clear plots
+graphics.off()  # Clears plots, closes all graphics devices
+
+# Clear console
+cat("\014")  # Mimics ctrl+L
+
+# Clear mind :)
